@@ -1,6 +1,6 @@
+// @flow
 import "./App.css";
 
-// @flow
 function foo(x: ?number): string {
   if (x) {
     return x;
