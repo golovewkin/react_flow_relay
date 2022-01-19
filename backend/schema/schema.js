@@ -56,7 +56,9 @@ const areaType = new GraphQLObjectType({
   name: "Area",
   interfaces: [nodeInterface],
   fields: () => ({
-    id: globalIdField(),
+    id: {
+      type: new GraphQLNonNull(GraphQLID),
+    },
     name: {
       type: GraphQLString,
     },
