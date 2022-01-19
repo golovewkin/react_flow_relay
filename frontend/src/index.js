@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import AppRoot from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const Root = () => (
   <React.StrictMode>
-    <App />
+    <AppRoot />
   </React.StrictMode>
 );
 
