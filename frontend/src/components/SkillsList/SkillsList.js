@@ -3,10 +3,9 @@ import React from 'react';
 const SkillsList = ({data}) => {
 	return (
     <section>
-      <h1>{data.name}</h1>
       <ul>
         {data?.skills && data.skills?.edges && data.skills.edges.map(edge => (
-          <li>{edge?.node?.name}</li>
+          <li key={edge.node.id}>{edge?.node?.name}</li>
         ))}
       </ul>
     </section>

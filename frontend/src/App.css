@@ -1,9 +1,27 @@
-.App {
-  text-align: center;
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 
-.App__skills-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.App {
+  text-align: center;
+    margin: 0;
+}
+
+.App__skills-wrapper li {
+    list-style: none;
+}
+
+.App__mock {
+    width: 300px;
+}
+
+.App__button {
+    border-radius: 50%;
+    cursor: pointer;
+    vertical-align: top;
 }
