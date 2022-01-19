@@ -12,10 +12,8 @@ body, html {
     margin: 0;
 }
 
-.App__skills-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.App__skills-wrapper li {
+    list-style: none;
 }
 
 .App__mock {
