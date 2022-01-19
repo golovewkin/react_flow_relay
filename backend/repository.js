@@ -75,7 +75,7 @@ function createSkill(skillName, areaId) {
     name: skillName,
   };
   data.Skill[newSkill.id] = newSkill;
-  data.Area[1].skills.push(newSkill.id); /// id to avoid an error
+  data.Area[areaId].skills.push(newSkill.id);
   return newSkill;
 }
 
