@@ -7,3 +7,7 @@
     align-items: center;
     justify-content: center;
 }
+
+.App__mock {
+    width: 300px;
+}
