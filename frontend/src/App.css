@@ -1,5 +1,15 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
 .App {
   text-align: center;
+    margin: 0;
 }
 
 .App__skills-wrapper {
@@ -10,4 +20,10 @@
 
 .App__mock {
     width: 300px;
+}
+
+.App__button {
+    border-radius: 50%;
+    cursor: pointer;
+    vertical-align: top;
 }

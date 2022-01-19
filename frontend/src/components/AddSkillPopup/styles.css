@@ -1,0 +1,34 @@
+.AddSkillPopup {
+    position:fixed;
+    width: 300px;
+    height: 100px;
+    background: white;
+    z-index:100;
+    padding: 30px;
+}
+
+.AddSkillPopup__overlay {
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background:rgba(0,0,0,.2);
+    display:flex;
+    justify-content:center;
+    align-items:center
+}
+
+.AddSkillPopup__buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content:center
+}
+
+.AddSkillPopup__buttons button {
+    margin-right: 10px;
+    cursor: pointer;
+}
