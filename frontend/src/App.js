@@ -54,8 +54,7 @@ const preloadedQuery = loadQuery(RelayEnvironment, query, {});
 function App() {
   const [popupState, setPopupState] = useState({open: false, areaId: ''});
   const { frontEnd, backEnd } = usePreloadedQuery(query, preloadedQuery);
-  // TODO isInFlight use
-  const [commit] = useMutation(mutation);
+  const [commit, isInFlight] = useMutation(mutation);
 
   const onSuccess = (skillName, areaId) => {
     commit({
@@ -83,21 +82,24 @@ function App() {
         onClose={() => setPopupState({open: false, areaId: ''})}/>
       <h1>Skills list</h1>
       <img className='App__mock' src={mockImg} alt=""/>
-      <section className='App__skills-wrapper'>
-        <section>
-          <h1>
-            <span>{frontEnd.name} </span>
-            <button className='App__button' onClick={() => setPopupState({open: true, areaId: frontEnd.id})}>+</button>
-          </h1>
-          <SkillsList data={frontEnd}/>
+      {isInFlight && <Loader />}
+      {!isInFlight && (
+        <section className='App__skills-wrapper'>
+          <section>
+            <h1>
+              <span>{frontEnd.name} </span>
+              <button className='App__button' onClick={() => setPopupState({open: true, areaId: frontEnd.id})}>+</button>
+            </h1>
+            <SkillsList data={frontEnd}/>
+          </section>
+          <section>
+            <h1>
+              <span>{backEnd.name}</span>
+              <button className='App__button' onClick={() => setPopupState({open: true, areaId: backEnd.id})}>+</button></h1>
+            <SkillsList data={backEnd}/>
+          </section>
         </section>
-        <section>
-          <h1>
-            <span>{backEnd.name}</span>
-            <button className='App__button' onClick={() => setPopupState({open: true, areaId: backEnd.id})}>+</button></h1>
-          <SkillsList data={backEnd}/>
-        </section>
-      </section>
+      )}
     </div>
   );
 }
