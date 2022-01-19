@@ -9,6 +9,7 @@ import {useMutation, usePreloadedQuery} from "react-relay";
 import graphql from "babel-plugin-relay/macro";
 import mockImg from './assets/mock.png'
 import AddSkillPopup from "./components/AddSkillPopup/AddSkillPopup";
+import updateLocalStore from "./relay/updateLocalStore";
 
 const query = graphql`
     query AppQuery {
@@ -62,6 +63,7 @@ function App() {
         skillName,
         areaId,
       },
+      // updater: (store, data) => updateLocalStore(store, data, viewer),
       onCompleted(data) {
         // TODO: how to update list???? refetch
         console.log(data);
