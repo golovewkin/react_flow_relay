@@ -11,7 +11,8 @@ async function fetchGraphQL(text, variables) {
     }),
   });
 
-  return response.json();
+  const json = await response.json();
+  return Array.isArray(json.errors) ? json.errors : json;
 }
 
 export default fetchGraphQL;
