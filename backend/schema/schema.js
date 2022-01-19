@@ -107,7 +107,7 @@ const skillMutation = mutationWithClientMutationId({
   mutateAndGetPayload: ({ skillName, areaId }) => {
     const newSkill = createSkill(skillName, areaId);
     return {
-      sillId: newSkill.id,
+      skillId: newSkill.id,
       areaId,
     };
   },
