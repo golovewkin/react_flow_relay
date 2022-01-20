@@ -18,7 +18,6 @@ const query = graphql`
             skills {
                 edges {
                     node {
-                        id
                         ...Skill_skill
                     }
                 }
@@ -30,7 +29,6 @@ const query = graphql`
             skills {
                 edges {
                     node {
-                        id
                         ...Skill_skill
                     }
                 }

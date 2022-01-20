@@ -1,17 +1,20 @@
 import React from 'react';
 import {createFragmentContainer} from "react-relay";
-const {graphql} = require('react-relay');
+import graphql from 'babel-plugin-relay/macro';
 
-function Skill({data}) {
+function Skill({skill}) {
   return (
     <>
-      <h1>{data.name}</h1>
+      <li>{skill?.name}</li>
     </>
   );
 }
 
-export default createFragmentContainer(Skill, graphql`
-    fragment Skill_skill on Skill {
-        name
-    }
-`)
+export default createFragmentContainer(Skill, {
+  skill: graphql`
+      fragment Skill_skill on Skill {
+          id
+          name
+      }
+  `
+})
