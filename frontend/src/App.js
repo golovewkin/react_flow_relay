@@ -9,7 +9,6 @@ import {useMutation, usePreloadedQuery} from "react-relay";
 import graphql from "babel-plugin-relay/macro";
 import mockImg from './assets/mock.png'
 import AddSkillPopup from "./components/AddSkillPopup/AddSkillPopup";
-import updateLocalStore from "./relay/updateLocalStore";
 
 const query = graphql`
     query AppQuery {
@@ -19,8 +18,7 @@ const query = graphql`
             skills {
                 edges {
                     node {
-                        id
-                        name
+                        ...Skill_skill
                     }
                 }
             }
@@ -31,8 +29,7 @@ const query = graphql`
             skills {
                 edges {
                     node {
-                        id
-                        name
+                        ...Skill_skill
                     }
                 }
             }
@@ -44,6 +41,7 @@ const mutation = graphql`
     mutation AppSkillMutation($skillName: String!, $areaId: ID!) {
         introduceSkill(input: { skillName: $skillName, areaId: $areaId }) {
             skill {
+                id
                 name
             }
         }
@@ -63,11 +61,12 @@ function App() {
         skillName,
         areaId,
       },
-      // updater: (store, data) => updateLocalStore(store, data, viewer),
       onCompleted(data) {
-        // TODO: how to update list???? refetch
-        console.log(data);
-        setPopupState({open: false, areaId: ''});
+        setPopupState(oldState => ({...oldState, open: false}));
+      },
+      updater (store, data) {
+        const skillRecord = store.get('frontend');
+        console.log(skillRecord);
       },
       onError(error){
         console.log(error);
