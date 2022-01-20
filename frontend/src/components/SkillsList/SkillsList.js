@@ -1,5 +1,5 @@
 import React from 'react';
-import FragmentComponent from "../Fragment";
+import Skill from "../Skill";
 
 const SkillsList = ({data}) => {
 	return (
@@ -8,7 +8,7 @@ const SkillsList = ({data}) => {
         {data?.skills && data.skills?.edges && data.skills.edges.map(edge => (
           <>
             <li key={edge.node.id}>{edge?.node?.id}</li>
-            <FragmentComponent skill={edge.node}/>
+            <Skill skill={edge.node}/>
           </>
         ))}
       </ul>

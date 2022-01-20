@@ -19,7 +19,7 @@ const query = graphql`
                 edges {
                     node {
                         id
-                        ...Fragment_data
+                        ...Skill_skill
                     }
                 }
             }
@@ -31,7 +31,7 @@ const query = graphql`
                 edges {
                     node {
                         id
-                        ...Fragment_data
+                        ...Skill_skill
                     }
                 }
             }
