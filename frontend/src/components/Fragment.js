@@ -1,16 +1,13 @@
 import React from 'react';
-const {graphql, useFragment} = require('react-relay');
+const {graphql} = require('react-relay');
 
-export function FragmentComponent(props) {
-  const data = useFragment(
-    graphql`
-        fragment Fragment on Skill {
-            name
-        }
-    `,
-    props.skill,
-  );
+export const fragment = graphql`
+    fragment Fragment_data on Skill {
+        name
+    }
+`;
 
+export default function FragmentComponent({data}) {
   return (
     <>
       <h1>{data.name}</h1>

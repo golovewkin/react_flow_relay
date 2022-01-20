@@ -1,5 +1,5 @@
 import React from 'react';
-import {FragmentComponent} from "../Fragment";
+import FragmentComponent from "../Fragment";
 
 const SkillsList = ({data}) => {
 	return (
