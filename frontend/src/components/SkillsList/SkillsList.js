@@ -1,4 +1,5 @@
 import React from 'react';
+import Skill from "../Skill";
 
 const SkillsList = ({data}) => {
 	return (
