@@ -9,6 +9,7 @@ import {useMutation, usePreloadedQuery} from "react-relay";
 import graphql from "babel-plugin-relay/macro";
 import mockImg from './assets/mock.png'
 import AddSkillPopup from "./components/AddSkillPopup/AddSkillPopup";
+import {ConnectionHandler} from "relay-runtime";
 
 const query = graphql`
     query AppQuery {
@@ -63,20 +64,36 @@ function App() {
         skillName,
         areaId,
       },
-      // updater: (store, data) => updateLocalStore(store, data, viewer),
-      onCompleted(data) {
+      onCompleted() {
         setPopupState(oldState => ({...oldState, open: false}));
       },
-      updater (proxyStore, data) {
-        const createSkillField = proxyStore.getRootField('AppSkillMutation')
-        const newSkill = createSkillField.getLinkedRecord('skill')
-debugger;
-        // 2 - add `newPost` to the store
-        // const viewerProxy = proxyStore.get(viewerId)
-        // const connection = ConnectionHandler.getConnection(viewerProxy, 'ListPage_allPosts')
-        // if (connection) {
-        //   ConnectionHandler.insertEdgeAfter(connection, newPost)
-        // }
+      updater (store, data) {
+        const areaRecord = store.get(areaId);
+
+        // Get connection record
+        const connectionRecord = ConnectionHandler.getConnection(
+          areaRecord,
+          areaId,
+        );
+
+        // Get the payload returned from the server
+        const newSkill = store.getRootField('introduceSkill')
+
+        // Get the edge inside the payload
+        const serverEdge = newSkill.getLinkedRecord('skill');
+
+        // Build edge for adding to the connection
+        const newEdge = ConnectionHandler.buildConnectionEdge(
+          store,
+          connectionRecord,
+          serverEdge,
+        );
+
+        // Add edge to the end of the connection
+        ConnectionHandler.insertEdgeAfter(
+          connectionRecord,
+          newEdge,
+        );
       },
       onError(error){
         console.log(error);
