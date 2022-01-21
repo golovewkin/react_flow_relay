@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+// @flow strict
+
+import React, {useState, Node} from 'react';
 import './App.css';
 import "./App.css";
 import {loadQuery, RelayEnvironmentProvider} from 'react-relay/hooks';
@@ -13,7 +15,7 @@ import {ConnectionHandler} from "relay-runtime";
 
 const query = graphql`
     query AppQuery {
-        frontEnd {
+        frontEnd @connection(key: "area_connection"){
             id
             name
             skills {
@@ -53,12 +55,12 @@ const mutation = graphql`
 
 const preloadedQuery = loadQuery(RelayEnvironment, query, {});
 
-function App() {
+function App(): Node {
   const [popupState, setPopupState] = useState({open: false, areaId: ''});
   const { frontEnd, backEnd } = usePreloadedQuery(query, preloadedQuery);
   const [commit, isInFlight] = useMutation(mutation);
 
-  const onSuccess = (skillName, areaId) => {
+  const onSuccess = (skillName: string, areaId: string) => {
     commit({
       variables: {
         skillName,
@@ -70,30 +72,20 @@ function App() {
       updater (store, data) {
         const areaRecord = store.get(areaId);
 
-        const serverEdge = store.getRootField('introduceSkill')
-        const newSkill = serverEdge.getLinkedRecord('skill')
+        const newEdge = store.getRootField('introduceSkill').getLinkedRecord('skill')
 
+        // todo get the right area
         // todo push it to the right area
         debugger;
         // Get connection record
         const connectionRecord = ConnectionHandler.getConnection(
           areaRecord,
-          areaId,
+          'skills_connection',
         );
 
-
-        // Build edge for adding to the connection
-        const newEdge = ConnectionHandler.buildConnectionEdge(
-          store,
-          connectionRecord,
-          serverEdge,
-        );
-
+debugger;
         // Add edge to the end of the connection
-        ConnectionHandler.insertEdgeAfter(
-          connectionRecord,
-          newEdge,
-        );
+        connectionRecord.insertEdgeAfter(connectionRecord, newEdge);
       },
       onError(error){
         console.log(error);
