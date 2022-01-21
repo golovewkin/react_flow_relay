@@ -70,17 +70,17 @@ function App() {
       updater (store, data) {
         const areaRecord = store.get(areaId);
 
+        const serverEdge = store.getRootField('introduceSkill')
+        const newSkill = serverEdge.getLinkedRecord('skill')
+
+        // todo push it to the right area
+        debugger;
         // Get connection record
         const connectionRecord = ConnectionHandler.getConnection(
           areaRecord,
           areaId,
         );
 
-        // Get the payload returned from the server
-        const newSkill = store.getRootField('introduceSkill')
-
-        // Get the edge inside the payload
-        const serverEdge = newSkill.getLinkedRecord('skill');
 
         // Build edge for adding to the connection
         const newEdge = ConnectionHandler.buildConnectionEdge(
