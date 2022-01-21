@@ -4,8 +4,10 @@ const SkillsList = ({data}) => {
 	return (
     <section>
       <ul>
-        {data?.skills && data.skills?.edges && data.skills.edges.map(edge => (
-          <li key={edge.node.id}>{edge?.node?.name}</li>
+        {data?.skills && data.skills?.edges && data.skills.edges.map((edge, i) => (
+          <React.Fragment key={edge.node.id}>
+            <Skill skill={edge.node}/>
+          </React.Fragment>
         ))}
       </ul>
     </section>
