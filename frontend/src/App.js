@@ -15,7 +15,7 @@ import {ConnectionHandler} from "relay-runtime";
 
 const query = graphql`
     query AppQuery {
-        frontEnd @connection(key: "area_connection"){
+        frontEnd{
             id
             name
             skills {
@@ -69,23 +69,18 @@ function App(): Node {
       onCompleted() {
         setPopupState(oldState => ({...oldState, open: false}));
       },
-      updater (store, data) {
+      updater (store) {
+
+        window.store = store;
+
         const areaRecord = store.get(areaId);
+        const newSkill = store.getRootField('introduceSkill');
 
-        const newEdge = store.getRootField('introduceSkill').getLinkedRecord('skill')
+        const skills = areaRecord.getLinkedRecord('skills')
+        skills.setLinkedRecord(newSkill)
 
-        // todo get the right area
-        // todo push it to the right area
-        debugger;
-        // Get connection record
-        const connectionRecord = ConnectionHandler.getConnection(
-          areaRecord,
-          'skills_connection',
-        );
-
-debugger;
-        // Add edge to the end of the connection
-        connectionRecord.insertEdgeAfter(connectionRecord, newEdge);
+        // const skillsRecord = ConnectionHandler.getConnection(areaRecord, 'skills');
+        // ConnectionHandler.insertEdgeAfter(skills, newSkill);
       },
       onError(error){
         console.log(error);
