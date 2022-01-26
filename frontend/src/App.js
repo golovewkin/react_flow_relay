@@ -1,6 +1,4 @@
-// @flow strict
-
-import React, {useState, Node} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import "./App.css";
 import {loadQuery, RelayEnvironmentProvider} from 'react-relay/hooks';
@@ -33,7 +31,6 @@ const query = graphql`
             skills {
                 edges {
                     node {
-                        id
                         ...Skill_skill
                     }
                 }

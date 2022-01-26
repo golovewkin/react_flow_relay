@@ -2,9 +2,6 @@ import React from 'react';
 import Skill from "../Skill";
 
 const SkillsList = ({data}) => {
-
-  console.log(data[0]);
-
 	return (
     <section>
       <ul>
