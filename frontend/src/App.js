@@ -70,17 +70,11 @@ function App(): Node {
         setPopupState(oldState => ({...oldState, open: false}));
       },
       updater (store) {
-
-        window.store = store;
-
         const areaRecord = store.get(areaId);
-        const newSkill = store.getRootField('introduceSkill');
-
-        const skills = areaRecord.getLinkedRecord('skills')
-        skills.setLinkedRecord(newSkill)
-
-        // const skillsRecord = ConnectionHandler.getConnection(areaRecord, 'skills');
-        // ConnectionHandler.insertEdgeAfter(skills, newSkill);
+        const skillsConnection = areaRecord.getLinkedRecord('skills');
+        const newEdge = store.getRootField('introduceSkill').getLinkedRecord('skill');
+        const edge = ConnectionHandler.createEdge(store, skillsConnection, newEdge, 'Skill');
+        ConnectionHandler.insertEdgeBefore(skillsConnection, edge);
       },
       onError(error){
         console.log(error);
