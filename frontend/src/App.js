@@ -9,15 +9,17 @@ import {useMutation, usePreloadedQuery} from "react-relay";
 import graphql from "babel-plugin-relay/macro";
 import mockImg from './assets/mock.png'
 import AddSkillPopup from "./components/AddSkillPopup/AddSkillPopup";
+import {ConnectionHandler} from "relay-runtime";
 
 const query = graphql`
     query AppQuery {
-        frontEnd {
+        frontEnd{
             id
             name
             skills {
                 edges {
                     node {
+                        id
                         ...Skill_skill
                     }
                 }
@@ -50,23 +52,26 @@ const mutation = graphql`
 
 const preloadedQuery = loadQuery(RelayEnvironment, query, {});
 
-function App() {
+function App(): Node {
   const [popupState, setPopupState] = useState({open: false, areaId: ''});
   const { frontEnd, backEnd } = usePreloadedQuery(query, preloadedQuery);
   const [commit, isInFlight] = useMutation(mutation);
 
-  const onSuccess = (skillName, areaId) => {
+  const onSuccess = (skillName: string, areaId: string) => {
     commit({
       variables: {
         skillName,
         areaId,
       },
-      onCompleted(data) {
+      onCompleted() {
         setPopupState(oldState => ({...oldState, open: false}));
       },
-      updater (store, data) {
-        const skillRecord = store.get('frontend');
-        console.log(skillRecord);
+      updater (store) {
+        const areaRecord = store.get(areaId);
+        const skillsConnection = areaRecord.getLinkedRecord('skills');
+        const newEdge = store.getRootField('introduceSkill').getLinkedRecord('skill');
+        const edge = ConnectionHandler.createEdge(store, skillsConnection, newEdge, 'Skill');
+        ConnectionHandler.insertEdgeBefore(skillsConnection, edge);
       },
       onError(error){
         console.log(error);
